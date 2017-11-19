@@ -6,6 +6,7 @@ import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 /**
  * This class indexes a directory of text files
@@ -33,20 +34,20 @@ class DirectoryIndexer {
 		this.index = new InvertedIndex();
 
 		Files.walk(this.path)
-		.filter(Files::isRegularFile)
-		.forEach(this::indexFile);
+				.filter(Files::isRegularFile)
+				.filter(path -> path.toString().endsWith(".txt"))
+				.forEach(this::indexFile);
 
 		return this.index;
 	}
 
 	private void indexFile(final Path file) {
-		try {
-			Files.lines(file)	// Read line by line
-			.flatMap(Pattern.compile("\\W+")::splitAsStream) // convert line to words
-			.map(word -> word.toLowerCase())
-			.forEach(word -> this.indexWordForFile(word, file.toString())); // Index filename for this word
-		} catch (final IOException e) {
-			e.printStackTrace();
+		try (Stream<String> lines = Files.lines(file)) {
+			lines.flatMap(Pattern.compile("\\W+")::splitAsStream)
+					.map(word -> word.toLowerCase())
+					.forEach(word -> this.indexWordForFile(word, file.toString()));
+		} catch (final Exception e) {
+			return;
 		}
 	}
 

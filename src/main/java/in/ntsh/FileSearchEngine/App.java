@@ -1,6 +1,8 @@
 package in.ntsh.FileSearchEngine;
 
-import java.io.File;
+import java.io.IOException;
+import java.util.List;
+import java.util.Map.Entry;
 import java.util.Scanner;
 
 public class App {
@@ -9,10 +11,18 @@ public class App {
 
 	public static void main(final String[] args) {
 
-		String directory = getDirectoryPath(args);
-
-		// Search
-		showSearchConsole();
+		String directoryPath = getDirectoryPath(args);
+		DirectoryIndexer indexer = new DirectoryIndexer(directoryPath);
+		InvertedIndex index = null;
+		try {
+			index = indexer.getIndex();
+			// Search
+			DirectorySearcher engine = new DirectorySearcher(index);
+			showSearchConsole(engine);
+		} catch (IOException e) {
+			System.out.println("Error reading text files");
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -31,11 +41,17 @@ public class App {
 		return indexableDirectory;
 	}
 
-	private static void showSearchConsole() {
+	private static void showSearchConsole(DirectorySearcher engine) {
 
 		while (true) {
 			System.out.print("Search> ");
-			KEYBOARD_SCANNER.nextLine();
+			String keywords = KEYBOARD_SCANNER.nextLine();
+			List<Entry<String, Integer>> results = engine.search(keywords);
+			printResults(results);
 		}
+	}
+
+	private static void printResults(List<Entry<String, Integer>> results) {
+		results.forEach(System.out::println);
 	}
 }
