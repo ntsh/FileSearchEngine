@@ -9,12 +9,14 @@ public class App {
 	private static final Scanner KEYBOARD_SCANNER = new Scanner(System.in);
 
 	public static void main(final String[] args) {
-
-		String directoryPath = getDirectoryPath(args);
-		DirectoryIndexer indexer = new DirectoryIndexer(directoryPath);
-		InvertedIndex index = null;
 		try {
-			index = indexer.getIndex();
+			String directoryPath = getDirectoryPath(args);
+
+			System.out.println("Indexing files in directory " + directoryPath);
+			// Index
+			DirectoryIndexer indexer = new DirectoryIndexer(directoryPath);
+			InvertedIndex index = indexer.getIndex();
+
 			// Search
 			DirectorySearcher engine = new DirectorySearcher(index);
 			showSearchConsole(engine);
@@ -41,7 +43,6 @@ public class App {
 	}
 
 	private static void showSearchConsole(DirectorySearcher engine) {
-
 		while (true) {
 			System.out.print("Search> ");
 			String keywords = KEYBOARD_SCANNER.nextLine();
