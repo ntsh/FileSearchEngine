@@ -34,14 +34,21 @@ public class SearchResults {
 	 * Returns the results sorted by most important result on top.
 	 * @return
 	 */
-	public List<SearchResult> getRankedResults() {
+	public List<SearchResult> getRankedResults(int keywordsCount) {
 		final List<SearchResult> sortedResults = this.fileFrequencyMap.entrySet()
 				.stream()
-				.sorted(Map.Entry.<String, Integer> comparingByValue()
-						.reversed())
+				.sorted(Map.Entry.<String, Integer> comparingByValue().reversed())
 				.limit(Config.RESULTS_COUNT)
-				.map(entry -> new SearchResult(entry.getKey(), entry.getValue()))
+				.map(entry -> {
+					Integer weight = this.getWeight(entry.getValue(), keywordsCount);
+					return new SearchResult(entry.getKey(), weight);
+				})
 				.collect(Collectors.toList());
 		return sortedResults;
+	}
+
+	private Integer getWeight(Integer value, int count) {
+		Integer weight = (Integer)(value * 100) / count;
+		return weight;
 	}
 }

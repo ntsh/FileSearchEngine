@@ -32,7 +32,7 @@ public class DirectorySearcherTest {
 		final SearchResult topResult = this.results.get(0);
 		final String expectedFileName = "src/test/java/in/ntsh/FileSearchEngine/resources/greeting.txt";
 		assertTrue(expectedFileName.equals(topResult.getFileName()));
-		assertEquals(2, topResult.getWeight().intValue());
+		assertEquals(100, topResult.getWeight().intValue());
 	}
 
 	@Test
@@ -40,7 +40,7 @@ public class DirectorySearcherTest {
 		final SearchResult secondResult = this.results.get(1);
 		final String expectedFileName = "src/test/java/in/ntsh/FileSearchEngine/resources/world.txt";
 		assertTrue(expectedFileName.equals(secondResult.getFileName()));
-		assertEquals(1, secondResult.getWeight().intValue());
+		assertEquals(50, secondResult.getWeight().intValue());
 	}
 
 	@Test
@@ -51,12 +51,12 @@ public class DirectorySearcherTest {
 		final SearchResult topResult = resultsReRun.get(0);
 		final String expectedFileName = "src/test/java/in/ntsh/FileSearchEngine/resources/greeting.txt";
 		assertTrue(expectedFileName.equals(topResult.getFileName()));
-		assertEquals(2, topResult.getWeight().intValue());
+		assertEquals(100, topResult.getWeight().intValue());
 
 		// Test 2nd result is same as before
 		final SearchResult secondResult = resultsReRun.get(1);
 		final String expectedFileName2ndResult = "src/test/java/in/ntsh/FileSearchEngine/resources/world.txt";
 		assertTrue(expectedFileName2ndResult.equals(secondResult.getFileName()));
-		assertEquals(1, secondResult.getWeight().intValue());
+		assertEquals(50, secondResult.getWeight().intValue());
 	}
 }
