@@ -2,7 +2,6 @@ package in.ntsh.FileSearchEngine;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.regex.Pattern;
 
 public class DirectorySearcher {
@@ -14,7 +13,7 @@ public class DirectorySearcher {
 		this.index = index;
 	}
 
-	public List<Entry<String, Integer>> search(final String words) {
+	public List<SearchResult> search(final String words) {
 		this.results = new SearchResults();
 
 		// Get unique words and search in the map

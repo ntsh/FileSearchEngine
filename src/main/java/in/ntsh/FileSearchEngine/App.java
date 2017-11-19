@@ -2,7 +2,6 @@ package in.ntsh.FileSearchEngine;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Map.Entry;
 import java.util.Scanner;
 
 public class App {
@@ -46,12 +45,12 @@ public class App {
 		while (true) {
 			System.out.print("Search> ");
 			String keywords = KEYBOARD_SCANNER.nextLine();
-			List<Entry<String, Integer>> results = engine.search(keywords);
+			List<SearchResult> results = engine.search(keywords);
 			printResults(results);
 		}
 	}
 
-	private static void printResults(List<Entry<String, Integer>> results) {
-		results.forEach(System.out::println);
+	private static void printResults(List<SearchResult> results) {
+		results.forEach(SearchResultPrinter::print);
 	}
 }

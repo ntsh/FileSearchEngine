@@ -35,7 +35,7 @@ class DirectoryIndexer {
 
 		Files.walk(this.path)
 				.filter(Files::isRegularFile)
-				//.filter(path -> path.toString().endsWith(".txt"))
+				.parallel()
 				.forEach(this::indexFile);
 
 		return this.index;
@@ -47,7 +47,7 @@ class DirectoryIndexer {
 					.map(word -> word.toLowerCase())
 					.forEach(word -> this.indexWordForFile(word, file.toString()));
 		} catch (final Exception e) {
-			return;
+			return; // Ignore files which can't be read as text
 		}
 	}
 

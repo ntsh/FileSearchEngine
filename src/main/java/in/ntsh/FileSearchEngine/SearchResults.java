@@ -3,7 +3,6 @@ package in.ntsh.FileSearchEngine;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 /**
@@ -12,10 +11,10 @@ import java.util.stream.Collectors;
  *
  */
 public class SearchResults {
-	private Map<String, Integer> fileOccurenceMap;
+	private Map<String, Integer> fileFrequencyMap;
 
 	public SearchResults() {
-		this.fileOccurenceMap = new HashMap<String, Integer>();
+		this.fileFrequencyMap = new HashMap<String, Integer>();
 	}
 
 	/**
@@ -24,23 +23,24 @@ public class SearchResults {
 	 * @param fileName
 	 */
 	public void addResult(final String fileName) {
-		Integer count = this.fileOccurenceMap.get(fileName);
+		Integer count = this.fileFrequencyMap.get(fileName);
 		if (count == null) {
 			count = 0;
 		}
-		this.fileOccurenceMap.put(fileName, count + 1);
+		this.fileFrequencyMap.put(fileName, count + 1);
 	}
 
 	/**
 	 * Returns the results sorted by most important result on top.
 	 * @return
 	 */
-	public List<Entry<String, Integer>> getRankedResults() {
-		final List<Entry<String, Integer>> sortedResults = this.fileOccurenceMap.entrySet()
+	public List<SearchResult> getRankedResults() {
+		final List<SearchResult> sortedResults = this.fileFrequencyMap.entrySet()
 				.stream()
 				.sorted(Map.Entry.<String, Integer> comparingByValue()
 						.reversed())
 				.limit(10)
+				.map(entry -> new SearchResult(entry.getKey(), entry.getValue()))
 				.collect(Collectors.toList());
 		return sortedResults;
 	}

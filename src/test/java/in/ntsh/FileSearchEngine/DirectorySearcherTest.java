@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
-import java.util.Map.Entry;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -12,7 +11,7 @@ import org.junit.Test;
 public class DirectorySearcherTest {
 
 	private DirectorySearcher searcher;
-	private List<Entry<String, Integer>> results;
+	private List<SearchResult> results;
 
 	@Before
 	public void setUp() throws Exception {
@@ -30,34 +29,34 @@ public class DirectorySearcherTest {
 
 	@Test
 	public void testTopSearchResult() {
-		final Entry<String, Integer> topResult = this.results.get(0);
+		final SearchResult topResult = this.results.get(0);
 		final String expectedFileName = "src/test/java/in/ntsh/FileSearchEngine/resources/greeting.txt";
-		assertTrue(expectedFileName.equals(topResult.getKey()));
-		assertEquals(2, topResult.getValue().intValue());
+		assertTrue(expectedFileName.equals(topResult.getFileName()));
+		assertEquals(2, topResult.getWeight().intValue());
 	}
 
 	@Test
 	public void testSecondSearchResult() {
-		final Entry<String, Integer> secondResult = this.results.get(1);
+		final SearchResult secondResult = this.results.get(1);
 		final String expectedFileName = "src/test/java/in/ntsh/FileSearchEngine/resources/world.txt";
-		assertTrue(expectedFileName.equals(secondResult.getKey()));
-		assertEquals(1, secondResult.getValue().intValue());
+		assertTrue(expectedFileName.equals(secondResult.getFileName()));
+		assertEquals(1, secondResult.getWeight().intValue());
 	}
 
 	@Test
 	public void testSearchTwiceShouldReturnSameResults() {
-		final List<Entry<String, Integer>> resultsReRun = this.searcher.search("great day");
+		final List<SearchResult> resultsReRun = this.searcher.search("great day");
 
 		// Test top result is same as before
-		final Entry<String, Integer> topResult = resultsReRun.get(0);
+		final SearchResult topResult = resultsReRun.get(0);
 		final String expectedFileName = "src/test/java/in/ntsh/FileSearchEngine/resources/greeting.txt";
-		assertTrue(expectedFileName.equals(topResult.getKey()));
-		assertEquals(2, topResult.getValue().intValue());
+		assertTrue(expectedFileName.equals(topResult.getFileName()));
+		assertEquals(2, topResult.getWeight().intValue());
 
 		// Test 2nd result is same as before
-		final Entry<String, Integer> secondResult = resultsReRun.get(1);
+		final SearchResult secondResult = resultsReRun.get(1);
 		final String expectedFileName2ndResult = "src/test/java/in/ntsh/FileSearchEngine/resources/world.txt";
-		assertTrue(expectedFileName2ndResult.equals(secondResult.getKey()));
-		assertEquals(1, secondResult.getValue().intValue());
+		assertTrue(expectedFileName2ndResult.equals(secondResult.getFileName()));
+		assertEquals(1, secondResult.getWeight().intValue());
 	}
 }
