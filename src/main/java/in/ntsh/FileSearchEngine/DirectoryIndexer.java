@@ -35,7 +35,7 @@ class DirectoryIndexer {
 
 		Files.walk(this.path)
 				.filter(Files::isRegularFile)
-				.filter(path -> path.toString().endsWith(".txt"))
+				//.filter(path -> path.toString().endsWith(".txt"))
 				.forEach(this::indexFile);
 
 		return this.index;

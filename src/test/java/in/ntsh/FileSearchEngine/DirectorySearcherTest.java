@@ -38,9 +38,26 @@ public class DirectorySearcherTest {
 
 	@Test
 	public void testSecondSearchResult() {
-		final Entry<String, Integer> topResult = this.results.get(1);
+		final Entry<String, Integer> secondResult = this.results.get(1);
 		final String expectedFileName = "src/test/java/in/ntsh/FileSearchEngine/resources/world.txt";
+		assertTrue(expectedFileName.equals(secondResult.getKey()));
+		assertEquals(1, secondResult.getValue().intValue());
+	}
+
+	@Test
+	public void testSearchTwiceShouldReturnSameResults() {
+		final List<Entry<String, Integer>> resultsReRun = this.searcher.search("great day");
+
+		// Test top result is same as before
+		final Entry<String, Integer> topResult = resultsReRun.get(0);
+		final String expectedFileName = "src/test/java/in/ntsh/FileSearchEngine/resources/greeting.txt";
 		assertTrue(expectedFileName.equals(topResult.getKey()));
-		assertEquals(1, topResult.getValue().intValue());
+		assertEquals(2, topResult.getValue().intValue());
+
+		// Test 2nd result is same as before
+		final Entry<String, Integer> secondResult = resultsReRun.get(1);
+		final String expectedFileName2ndResult = "src/test/java/in/ntsh/FileSearchEngine/resources/world.txt";
+		assertTrue(expectedFileName2ndResult.equals(secondResult.getKey()));
+		assertEquals(1, secondResult.getValue().intValue());
 	}
 }
