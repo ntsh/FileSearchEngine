@@ -5,9 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -17,7 +15,7 @@ import java.util.regex.Pattern;
 class DirectoryIndexer {
 
 	private final Path path;
-	private Map<String, List<String>> index;
+	private Map<String, Map<String, Integer>> index;
 
 	private final Object lock = new Object();
 
@@ -34,8 +32,8 @@ class DirectoryIndexer {
 	 *
 	 * @throws IOException
 	 */
-	public Map<String, List<String>> getIndex() throws IOException {
-		this.index = new HashMap<String, List<String>>();
+	public Map<String, Map<String, Integer>> getIndex() throws IOException {
+		this.index = new HashMap<String, Map<String, Integer>>();
 
 		Files.walk(this.path)
 		.filter(Files::isRegularFile)
@@ -49,22 +47,26 @@ class DirectoryIndexer {
 			Files.lines(file)	// Read line by line
 			.flatMap(Pattern.compile("\\W+")::splitAsStream) // convert line to words
 			.map(word -> word.toLowerCase())
-			.forEach(word -> this.indexWord(word, file)); // Index filename for this word
+			.forEach(word -> this.indexWordForFile(word, file.toString())); // Index filename for this word
 		} catch (final IOException e) {
 			e.printStackTrace();
 		}
 	}
 
-	private void indexWord(final String word, final Path file) {
+	private void indexWordForFile(final String word, final String file) {
 		// Get Existing index for the word or create a new list
-		List<String> fileList = this.index.get(word);
+		Map<String, Integer> fileList = this.index.get(word);
 		if (fileList == null) {
-			fileList = new ArrayList<String>();
+			fileList = new HashMap<String, Integer>();
+			fileList.put(file, 1);
+		} else {
+			// Add file and count to index of the word
+			Integer countOfWords = fileList.get(file);
+			if (countOfWords == null) {
+				countOfWords = 0;
+			}
+			fileList.put(file, countOfWords + 1);
 		}
-
-		// Add file to the list of indices of the word
-		fileList.add(file.toString());
-
 		// Put back word's index to Directory's index
 		synchronized(this.lock) {
 			this.index.put(word, fileList);
