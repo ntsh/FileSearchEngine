@@ -9,7 +9,7 @@ public class App {
 
 	public static void main(final String[] args) {
 
-		getDirectory(args);
+		String directory = getDirectoryPath(args);
 
 		// Search
 		showSearchConsole();
@@ -19,13 +19,13 @@ public class App {
 	 * Get Directory path from argument passed, else get directory path from
 	 * user if no argument is passed
 	 */
-	private static File getDirectory(final String[] args) {
-		File indexableDirectory;
+	private static String getDirectoryPath(final String[] args) {
+		String indexableDirectory;
 		if (args.length == 0) {
 			System.out.print("Directory> ");
-			indexableDirectory = new File(KEYBOARD_SCANNER.nextLine());
+			indexableDirectory = KEYBOARD_SCANNER.nextLine();
 		} else {
-			indexableDirectory = new File(args[0]);
+			indexableDirectory = args[0];
 		}
 
 		return indexableDirectory;
