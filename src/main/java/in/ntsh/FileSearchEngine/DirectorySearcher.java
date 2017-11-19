@@ -37,7 +37,7 @@ public class DirectorySearcher {
 	}
 
 	private void searchWord(String word) {
-		Map<String, Integer> map = this.index.get(word);
+		Map<String, Integer> map = this.index.get(word.toLowerCase());
 		if (map == null) {
 			return;
 		}
