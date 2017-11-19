@@ -11,7 +11,7 @@ import java.util.stream.Stream;
 /**
  * This class indexes a directory of text files
  */
-class DirectoryIndexer {
+public class DirectoryIndexer {
 
 	private final Path path;
 	private InvertedIndex index = new InvertedIndex();
