@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
  *
  */
 public class SearchResults {
-	private Map<String, Integer> fileFrequencyMap;
+	private final Map<String, Integer> fileFrequencyMap;
 
 	public SearchResults() {
 		this.fileFrequencyMap = new HashMap<String, Integer>();
@@ -34,21 +34,21 @@ public class SearchResults {
 	 * Returns the results sorted by most important result on top.
 	 * @return
 	 */
-	public List<SearchResult> getRankedResults(int keywordsCount) {
+	public List<SearchResult> getRankedResults(final int keywordsCount) {
 		final List<SearchResult> sortedResults = this.fileFrequencyMap.entrySet()
 				.stream()
 				.sorted(Map.Entry.<String, Integer> comparingByValue().reversed())
 				.limit(Config.RESULTS_COUNT)
 				.map(entry -> {
-					Integer weight = this.getWeight(entry.getValue(), keywordsCount);
+					final Integer weight = this.getWeight(entry.getValue(), keywordsCount);
 					return new SearchResult(entry.getKey(), weight);
 				})
 				.collect(Collectors.toList());
 		return sortedResults;
 	}
 
-	private Integer getWeight(Integer value, int count) {
-		Integer weight = (Integer)(value * 100) / count;
+	private Integer getWeight(final Integer value, final int count) {
+		final Integer weight = value * 100 / count;
 		return weight;
 	}
 }

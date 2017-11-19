@@ -34,9 +34,9 @@ class DirectoryIndexer {
 		this.index = new InvertedIndex();
 
 		Files.walk(this.path)	// Get all files in directory
-				.filter(Files::isRegularFile) // Ignore file if it's a directory
-				.parallel()		// Asynchronously process all files
-				.forEach(this::indexFile); // index each file and it's words
+		.filter(Files::isRegularFile) // Ignore file if it's a directory
+		.parallel()		// Asynchronously process all files
+		.forEach(this::indexFile); // index each file and it's words
 
 		return this.index;
 	}
@@ -44,16 +44,16 @@ class DirectoryIndexer {
 	private void indexFile(final Path file) {
 		try (Stream<String> lines = Files.lines(file)) { // Get all lines
 			lines.flatMap(Pattern.compile("\\W+")::splitAsStream) // Get all words
-					.map(word -> word.toLowerCase())
-					.forEach(word -> this.indexWordForFile(word, file.toString())); // index word
+			.map(word -> word.toLowerCase())
+			.forEach(word -> this.indexWordForFile(word, file.toString())); // index word
 		} catch (final Exception e) {
 			return; // Ignore files which can't be read as text
 		}
 	}
 
 	private void indexWordForFile(final String word, final String file) {
-		synchronized (lock) {
-			index.indexWordInFile(word, file);
+		synchronized (this.lock) {
+			this.index.indexWordInFile(word, file);
 		}
 	}
 }

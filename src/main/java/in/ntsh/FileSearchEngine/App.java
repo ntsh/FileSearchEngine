@@ -10,17 +10,17 @@ public class App {
 
 	public static void main(final String[] args) {
 		try {
-			String directoryPath = getDirectoryPath(args);
+			final String directoryPath = getDirectoryPath(args);
 
 			System.out.println("Indexing files in directory " + directoryPath);
 			// Index
-			DirectoryIndexer indexer = new DirectoryIndexer(directoryPath);
-			InvertedIndex index = indexer.getIndex();
+			final DirectoryIndexer indexer = new DirectoryIndexer(directoryPath);
+			final InvertedIndex index = indexer.getIndex();
 
 			// Search
-			DirectorySearcher engine = new DirectorySearcher(index);
+			final DirectorySearcher engine = new DirectorySearcher(index);
 			showSearchConsole(engine);
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			System.out.println("Error reading text files");
 			e.printStackTrace();
 		}
@@ -42,16 +42,16 @@ public class App {
 		return indexableDirectory;
 	}
 
-	private static void showSearchConsole(DirectorySearcher engine) {
+	private static void showSearchConsole(final DirectorySearcher engine) {
 		while (true) {
 			System.out.print("Search> ");
-			String keywords = KEYBOARD_SCANNER.nextLine();
-			List<SearchResult> results = engine.search(keywords);
+			final String keywords = KEYBOARD_SCANNER.nextLine();
+			final List<SearchResult> results = engine.search(keywords);
 			printResults(results);
 		}
 	}
 
-	private static void printResults(List<SearchResult> results) {
+	private static void printResults(final List<SearchResult> results) {
 		results.forEach(SearchResultPrinter::print);
 	}
 }

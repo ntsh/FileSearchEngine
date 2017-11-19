@@ -2,20 +2,20 @@ package in.ntsh.FileSearchEngine;
 
 public class SearchResult {
 
-	private String fileName;
+	private final String fileName;
 
-	private Integer weight;
-	
+	private final Integer weight;
+
 	public SearchResult(final String fileName, final Integer weight) {
 		this.fileName = fileName;
 		this.weight = weight;
 	}
-	
+
 	public String getFileName() {
-		return fileName;
+		return this.fileName;
 	}
 
 	public Integer getWeight() {
-		return weight;
+		return this.weight;
 	}
 }
