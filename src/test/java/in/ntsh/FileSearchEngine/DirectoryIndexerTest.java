@@ -12,7 +12,7 @@ import org.junit.Test;
 
 public class DirectoryIndexerTest {
 
-	private Map<String, Map<String, Integer>> index;
+	private InvertedIndex index;
 
 	@Before
 	public void setUp() throws Exception {
