@@ -39,7 +39,7 @@ public class SearchResults {
 				.stream()
 				.sorted(Map.Entry.<String, Integer> comparingByValue()
 						.reversed())
-				.limit(10)
+				.limit(Config.RESULTS_COUNT)
 				.map(entry -> new SearchResult(entry.getKey(), entry.getValue()))
 				.collect(Collectors.toList());
 		return sortedResults;

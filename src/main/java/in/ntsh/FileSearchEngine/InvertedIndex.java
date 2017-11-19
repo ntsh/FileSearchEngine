@@ -17,7 +17,7 @@ public class InvertedIndex {
 	 * @param word
 	 * @param file
 	 */
-	public void indexWordForFile(final String word, final String file) {
+	public void indexWordInFile(final String word, final String file) {
 		// Get Existing index for the word or create a new list
 		Map<String, Integer> fileList = index.get(word);
 		if (fileList == null) {
@@ -35,7 +35,11 @@ public class InvertedIndex {
 		index.put(word, fileList);
 	}
 
-	public Map<String, Integer> get(String word) {
+	/**
+	 * Returns the Map of files, frequency for a given word from the index 
+	 * @param word
+	 */
+	public Map<String, Integer> getPostingsForWord(String word) {
 		return this.index.get(word);
 	}
 }

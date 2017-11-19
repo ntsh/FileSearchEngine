@@ -28,7 +28,7 @@ public class DirectorySearcher {
 	}
 
 	private void searchWord(final String word) {
-		final Map<String, Integer> map = this.index.get(word.toLowerCase());
+		final Map<String, Integer> map = this.index.getPostingsForWord(word.toLowerCase());
 		if (map == null) {
 			return;
 		}

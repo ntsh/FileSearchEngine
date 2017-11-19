@@ -53,7 +53,7 @@ class DirectoryIndexer {
 
 	private void indexWordForFile(final String word, final String file) {
 		synchronized (lock) {
-			index.indexWordForFile(word, file);
+			index.indexWordInFile(word, file);
 		}
 	}
 }

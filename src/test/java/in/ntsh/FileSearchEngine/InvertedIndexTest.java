@@ -23,9 +23,9 @@ public class InvertedIndexTest {
 		String word = "hello";
 		String file = "hello.txt";
 
-		this.index.indexWordForFile(word, file);
+		this.index.indexWordInFile(word, file);
 
-		Map<String, Integer> map = this.index.get(word);
+		Map<String, Integer> map = this.index.getPostingsForWord(word);
 		assertTrue(map.containsKey(file));
 	}
 
@@ -34,17 +34,17 @@ public class InvertedIndexTest {
 		String word = "hello";
 		String file = "hello.txt";
 
-		this.index.indexWordForFile(word, file);
-		this.index.indexWordForFile(word, file);
+		this.index.indexWordInFile(word, file);
+		this.index.indexWordInFile(word, file);
 
-		Map<String, Integer> map = this.index.get(word);
+		Map<String, Integer> map = this.index.getPostingsForWord(word);
 		Integer count = map.get(file);
 		assertEquals(2, count.intValue());
 	}
 
 	@Test
 	public void testEmptyIndex() {
-		Map<String, Integer> map = this.index.get("hello");
+		Map<String, Integer> map = this.index.getPostingsForWord("hello");
 		assertNull(map);
 	}
 
