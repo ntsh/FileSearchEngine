@@ -15,7 +15,7 @@ public class DirectoryIndexer {
 
 	private final Path path;
 	private InvertedIndex index = new InvertedIndex();
-	final Object lock = new Object();
+	private final Object lock = new Object();
 
 	/**
 	 * @param directoryPath : path of the directory to be indexed
