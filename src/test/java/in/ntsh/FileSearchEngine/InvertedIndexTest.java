@@ -1,10 +1,9 @@
 package in.ntsh.FileSearchEngine;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import java.util.Map;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -25,8 +24,8 @@ public class InvertedIndexTest {
 
 		this.index.indexWordInFile(word, file);
 
-		final Map<String, Integer> map = this.index.getPostingsForWord(word);
-		assertTrue(map.containsKey(file));
+		final List<Posting> postings = this.index.getPostingsForWord(word);
+		assertTrue(findPostingForFile(file, postings) != null);
 	}
 
 	@Test
@@ -37,15 +36,25 @@ public class InvertedIndexTest {
 		this.index.indexWordInFile(word, file);
 		this.index.indexWordInFile(word, file);
 
-		final Map<String, Integer> map = this.index.getPostingsForWord(word);
-		final Integer count = map.get(file);
-		assertEquals(2, count.intValue());
+		final List<Posting> postings = this.index.getPostingsForWord(word);
+		Posting posting = findPostingForFile(file, postings);
+		final int count = posting.getCount();
+		assertEquals(2, count);
 	}
 
 	@Test
 	public void testEmptyIndex() {
-		final Map<String, Integer> map = this.index.getPostingsForWord("hello");
-		assertNull(map);
+		final List<Posting> postings = this.index.getPostingsForWord("hello");
+		assertTrue(postings.isEmpty());
+	}
+
+	private Posting findPostingForFile(String file, List<Posting> list) {
+		for (Posting posting : list) {
+			if (posting.getFileName().equals(file)) {
+				return posting;
+			}
+		}
+		return null;
 	}
 
 }

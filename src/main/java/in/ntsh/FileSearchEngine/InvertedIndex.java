@@ -1,6 +1,8 @@
 package in.ntsh.FileSearchEngine;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class InvertedIndex {
@@ -19,27 +21,34 @@ public class InvertedIndex {
 	 */
 	public void indexWordInFile(final String word, final String file) {
 		// Get Existing index for the word or create a new list
-		Map<String, Integer> fileList = this.index.get(word);
-		if (fileList == null) {
-			fileList = new HashMap<String, Integer>();
-			fileList.put(file, 1);
+		Map<String, Integer> fileMap = this.index.get(word);
+		if (fileMap == null) {
+			fileMap = new HashMap<String, Integer>();
+			fileMap.put(file, 1);
 		} else {
 			// Add file and count to index of the word
-			Integer countOfWords = fileList.get(file);
+			Integer countOfWords = fileMap.get(file);
 			if (countOfWords == null) {
 				countOfWords = 0;
 			}
-			fileList.put(file, countOfWords + 1);
+			fileMap.put(file, countOfWords + 1);
 		}
 		// Put back word's index to Directory's index
-		this.index.put(word, fileList);
+		this.index.put(word, fileMap);
 	}
 
 	/**
-	 * Returns the Map of files, frequency for a given word from the index
+	 * Returns the List of postings for a given word from the index
 	 * @param word
 	 */
-	public Map<String, Integer> getPostingsForWord(final String word) {
-		return this.index.get(word);
+	public List<Posting> getPostingsForWord(final String word) {
+		Map<String, Integer> fileMap = this.index.get(word);
+
+		List<Posting> postings = new ArrayList<Posting>();
+		if(fileMap != null) {
+			fileMap.forEach((file, frequency) -> postings.add(new Posting(file, frequency)));
+		}
+
+		return postings;
 	}
 }

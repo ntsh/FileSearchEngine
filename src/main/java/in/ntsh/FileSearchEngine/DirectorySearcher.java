@@ -1,7 +1,6 @@
 package in.ntsh.FileSearchEngine;
 
 import java.util.List;
-import java.util.Map;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
@@ -39,12 +38,13 @@ public class DirectorySearcher {
 	private void searchWord(final String word) {
 		this.keywordsCount++;
 
-		final Map<String, Integer> map = this.index.getPostingsForWord(word.toLowerCase());
-		if (map == null) {
+		final List<Posting> postings = this.index.getPostingsForWord(word.toLowerCase());
+		if (postings == null) {
 			return; // Word not present in the index
 		}
-		map.forEach((file, frequency) -> {
-			this.results.addResult(file);
+		postings.forEach(posting -> {
+			this.results.addResult(posting.getFileName());
+			//Frequency of file in a posting is ignored in this algorithm
 		});
 	}
 }

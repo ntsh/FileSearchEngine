@@ -5,12 +5,16 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
-import java.util.Map;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
 
 public class DirectoryIndexerTest {
+
+	private static String FILE_HELLO = "src/test/java/in/ntsh/FileSearchEngine/resources/hello.txt";
+	private static String FILE_GREETING = "src/test/java/in/ntsh/FileSearchEngine/resources/greeting.txt";
+	private static String FILE_WORLD = "src/test/java/in/ntsh/FileSearchEngine/resources/world.txt";
 
 	private InvertedIndex index;
 
@@ -23,42 +27,52 @@ public class DirectoryIndexerTest {
 
 	@Test
 	public void testIndexForSingleWord() {
-		final Map<String, Integer> fileListForHello = this.index.getPostingsForWord("hello");
-		assertTrue(fileListForHello.containsKey("src/test/java/in/ntsh/FileSearchEngine/resources/hello.txt"));
-		assertTrue(fileListForHello.containsKey("src/test/java/in/ntsh/FileSearchEngine/resources/greeting.txt"));
-		assertFalse(fileListForHello.containsKey("src/test/java/in/ntsh/FileSearchEngine/resources/world.txt"));
+		final List<Posting> postings = this.index.getPostingsForWord("hello");
+		assertTrue(findPostingForFile(FILE_HELLO, postings) != null);
+		assertTrue(findPostingForFile(FILE_GREETING, postings) != null);
+		assertFalse(findPostingForFile(FILE_WORLD, postings) != null);
 	}
 
 	@Test
 	public void testFileCountForWordRepeatedInAFile() {
-		final Map<String, Integer> fileListForGreat = this.index.getPostingsForWord("great");
+		final List<Posting> fileListForGreat = this.index.getPostingsForWord("great");
 		assertEquals(2, fileListForGreat.size());
 	}
 
 	@Test
 	public void testOccurenceCountForWordRepeatedInAFile() {
-		final Map<String, Integer> fileListForGreat = this.index.getPostingsForWord("great");
-		final Integer count = fileListForGreat.get("src/test/java/in/ntsh/FileSearchEngine/resources/greeting.txt");
-		assertEquals(2, count.intValue());
+		final List<Posting> postings = this.index.getPostingsForWord("great");
+		final Posting posting = findPostingForFile(FILE_GREETING, postings);
+		assertEquals(2, posting.getCount());
 	}
 
 	@Test
 	public void testIndexForWordWithSpecialCharacter() {
-		final Map<String, Integer> fileListForWorld = this.index.getPostingsForWord("world");
-		assertTrue(fileListForWorld.containsKey("src/test/java/in/ntsh/FileSearchEngine/resources/hello.txt"));
-		assertTrue(fileListForWorld.containsKey("src/test/java/in/ntsh/FileSearchEngine/resources/world.txt"));
-		assertFalse(fileListForWorld.containsKey("src/test/java/in/ntsh/FileSearchEngine/resources/greeting.txt"));
+		final List<Posting> postings = this.index.getPostingsForWord("great");
+
+		assertTrue(findPostingForFile(FILE_WORLD, postings) != null);
+		assertTrue(findPostingForFile(FILE_GREETING, postings) != null);
+		assertFalse(findPostingForFile(FILE_HELLO, postings) != null);
 	}
 
 	@Test
 	public void testEmptyIndex() {
-		final Map<String, Integer> fileListForNonExistentWord = this.index.getPostingsForWord("randomword");
-		assertTrue(fileListForNonExistentWord == null);
+		final List<Posting> postings = this.index.getPostingsForWord("randomword");
+		assertEquals(0, postings.size());
 	}
 
 	@Test(expected = IOException.class)
 	public void testInvalidDirectoryPath() throws IOException {
 		final DirectoryIndexer indexer = new DirectoryIndexer("/invalid/path");
 		indexer.getIndex();
+	}
+
+	private Posting findPostingForFile(String file, List<Posting> list) {
+		for (Posting posting : list) {
+			if (posting.getFileName().equals(file)) {
+				return posting;
+			}
+		}
+		return null;
 	}
 }
