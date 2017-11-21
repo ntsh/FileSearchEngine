@@ -8,26 +8,26 @@ public class Posting {
 
 	private String fileName;
 	private int count;
-	
-	Posting(String fileName) {
+
+	Posting(final String fileName) {
 		new Posting(fileName, 0);
 	}
-	
-	Posting(String fileName, Integer frequency) {
+
+	Posting(final String fileName, final Integer frequency) {
 		this.fileName = fileName;
 		this.count = frequency;
 	}
 
 	public String getFileName() {
-		return fileName;
+		return this.fileName;
 	}
 
 	public int getCount() {
-		return count;
+		return this.count;
 	}
 
 	public void incrementCount() {
 		this.count++;
 	}
-	
+
 }

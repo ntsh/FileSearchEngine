@@ -1,12 +1,12 @@
 package in.ntsh.FileSearchEngine;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
 
 public class PostingTest {
-	
+
 	private static String FILE_NAME = "file.txt";
 	private Posting posting;
 

@@ -25,7 +25,7 @@ public class InvertedIndexTest {
 		this.index.indexWordInFile(word, file);
 
 		final List<Posting> postings = this.index.getPostingsForWord(word);
-		assertTrue(findPostingForFile(file, postings) != null);
+		assertTrue(this.findPostingForFile(file, postings) != null);
 	}
 
 	@Test
@@ -37,7 +37,7 @@ public class InvertedIndexTest {
 		this.index.indexWordInFile(word, file);
 
 		final List<Posting> postings = this.index.getPostingsForWord(word);
-		Posting posting = findPostingForFile(file, postings);
+		final Posting posting = this.findPostingForFile(file, postings);
 		final int count = posting.getCount();
 		assertEquals(2, count);
 	}
@@ -48,8 +48,8 @@ public class InvertedIndexTest {
 		assertTrue(postings.isEmpty());
 	}
 
-	private Posting findPostingForFile(String file, List<Posting> list) {
-		for (Posting posting : list) {
+	private Posting findPostingForFile(final String file, final List<Posting> list) {
+		for (final Posting posting : list) {
 			if (posting.getFileName().equals(file)) {
 				return posting;
 			}

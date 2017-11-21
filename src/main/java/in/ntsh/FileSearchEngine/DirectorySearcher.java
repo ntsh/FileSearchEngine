@@ -4,6 +4,15 @@ import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
+/**
+ * Searches for a file if given an index.
+ *
+ * Currently this is a simple directory search where it just takes into fact
+ * that a word is present in a file or not.
+ *
+ * Advanced Search algorithms could be implemented to also consider the frequency and positions
+ * of a word in a file.
+ */
 public class DirectorySearcher {
 
 	private final InvertedIndex index;
@@ -14,6 +23,9 @@ public class DirectorySearcher {
 		this.index = index;
 	}
 
+	/**
+	 *  Searches for a word in index and returns list of sorted SearchResult
+	 */
 	public List<SearchResult> search(final String words) {
 		this.keywordsCount = 0;
 

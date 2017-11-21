@@ -28,9 +28,9 @@ public class DirectoryIndexerTest {
 	@Test
 	public void testIndexForSingleWord() {
 		final List<Posting> postings = this.index.getPostingsForWord("hello");
-		assertTrue(findPostingForFile(FILE_HELLO, postings) != null);
-		assertTrue(findPostingForFile(FILE_GREETING, postings) != null);
-		assertFalse(findPostingForFile(FILE_WORLD, postings) != null);
+		assertTrue(this.findPostingForFile(FILE_HELLO, postings) != null);
+		assertTrue(this.findPostingForFile(FILE_GREETING, postings) != null);
+		assertFalse(this.findPostingForFile(FILE_WORLD, postings) != null);
 	}
 
 	@Test
@@ -42,7 +42,7 @@ public class DirectoryIndexerTest {
 	@Test
 	public void testOccurenceCountForWordRepeatedInAFile() {
 		final List<Posting> postings = this.index.getPostingsForWord("great");
-		final Posting posting = findPostingForFile(FILE_GREETING, postings);
+		final Posting posting = this.findPostingForFile(FILE_GREETING, postings);
 		assertEquals(2, posting.getCount());
 	}
 
@@ -50,9 +50,9 @@ public class DirectoryIndexerTest {
 	public void testIndexForWordWithSpecialCharacter() {
 		final List<Posting> postings = this.index.getPostingsForWord("great");
 
-		assertTrue(findPostingForFile(FILE_WORLD, postings) != null);
-		assertTrue(findPostingForFile(FILE_GREETING, postings) != null);
-		assertFalse(findPostingForFile(FILE_HELLO, postings) != null);
+		assertTrue(this.findPostingForFile(FILE_WORLD, postings) != null);
+		assertTrue(this.findPostingForFile(FILE_GREETING, postings) != null);
+		assertFalse(this.findPostingForFile(FILE_HELLO, postings) != null);
 	}
 
 	@Test
@@ -67,8 +67,8 @@ public class DirectoryIndexerTest {
 		indexer.getIndex();
 	}
 
-	private Posting findPostingForFile(String file, List<Posting> list) {
-		for (Posting posting : list) {
+	private Posting findPostingForFile(final String file, final List<Posting> list) {
+		for (final Posting posting : list) {
 			if (posting.getFileName().equals(file)) {
 				return posting;
 			}

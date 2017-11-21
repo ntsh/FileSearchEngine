@@ -42,9 +42,9 @@ public class InvertedIndex {
 	 * @param word
 	 */
 	public List<Posting> getPostingsForWord(final String word) {
-		Map<String, Integer> fileMap = this.index.get(word);
+		final Map<String, Integer> fileMap = this.index.get(word);
 
-		List<Posting> postings = new ArrayList<Posting>();
+		final List<Posting> postings = new ArrayList<Posting>();
 		if(fileMap != null) {
 			fileMap.forEach((file, frequency) -> postings.add(new Posting(file, frequency)));
 		}
