@@ -14,8 +14,7 @@ import java.util.stream.Stream;
 public class DirectoryIndexer {
 
 	private final Path path;
-	private InvertedIndex index = new InvertedIndex();
-	private final Object lock = new Object();
+	private InvertedIndex index;
 
 	/**
 	 * @param directoryPath : path of the directory to be indexed
@@ -45,15 +44,9 @@ public class DirectoryIndexer {
 		try (Stream<String> lines = Files.lines(file)) { // Get all lines
 			lines.flatMap(Pattern.compile("\\W+")::splitAsStream) // Get all words
 			.map(word -> word.toLowerCase())
-			.forEach(word -> this.indexWordForFile(word, file.toString())); // index word
+			.forEach(word -> this.index.indexWordInFile(word, file.toString())); // index word
 		} catch (final Exception e) {
 			return; // Ignore files which can't be read as text
-		}
-	}
-
-	private void indexWordForFile(final String word, final String file) {
-		synchronized (this.lock) {
-			this.index.indexWordInFile(word, file);
 		}
 	}
 }
