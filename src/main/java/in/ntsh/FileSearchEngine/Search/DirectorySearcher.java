@@ -54,9 +54,7 @@ public class DirectorySearcher {
 		this.keywordsCount++;
 
 		final List<Posting> postings = this.index.getPostingsForWord(word.toLowerCase());
-		if (postings == null) {
-			return; // Word not present in the index
-		}
+
 		postings.forEach(posting -> {
 			this.results.addResult(posting.getFileName());
 			//Frequency of file in a posting is ignored in this algorithm

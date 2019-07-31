@@ -64,4 +64,10 @@ public class DirectorySearcherTest {
 		assertTrue(expectedFileName2ndResult.equals(secondResult.getFileName()));
 		assertEquals(50, secondResult.getWeight().intValue());
 	}
+
+	@Test
+	public void testNoResult() {
+		final List<SearchResult> noResults = this.searcher.search("UnknownWord");
+		assertTrue(noResults.isEmpty());
+	}
 }
