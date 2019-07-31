@@ -1,4 +1,4 @@
-package in.ntsh.FileSearchEngine;
+package in.ntsh.FileSearchEngine.Search;
 
 public class SearchResult {
 

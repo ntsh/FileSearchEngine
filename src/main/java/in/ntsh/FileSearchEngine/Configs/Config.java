@@ -1,4 +1,4 @@
-package in.ntsh.FileSearchEngine;
+package in.ntsh.FileSearchEngine.Configs;
 
 public final class Config {
 

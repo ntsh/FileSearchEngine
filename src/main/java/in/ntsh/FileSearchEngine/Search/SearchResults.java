@@ -1,9 +1,11 @@
-package in.ntsh.FileSearchEngine;
+package in.ntsh.FileSearchEngine.Search;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+import in.ntsh.FileSearchEngine.Configs.Config;
 
 /**
  * Class to hold the search results in the form of file name and

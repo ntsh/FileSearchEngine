@@ -4,6 +4,12 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
+import in.ntsh.FileSearchEngine.Index.DirectoryIndexer;
+import in.ntsh.FileSearchEngine.Index.InvertedIndex;
+import in.ntsh.FileSearchEngine.Search.DirectorySearcher;
+import in.ntsh.FileSearchEngine.Search.SearchResult;
+import in.ntsh.FileSearchEngine.Search.SearchResultPrinter;
+
 public class App {
 
 	private static final Scanner KEYBOARD_SCANNER = new Scanner(System.in);

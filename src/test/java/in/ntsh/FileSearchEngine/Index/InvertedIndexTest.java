@@ -1,4 +1,4 @@
-package in.ntsh.FileSearchEngine;
+package in.ntsh.FileSearchEngine.Index;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -7,6 +7,9 @@ import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import in.ntsh.FileSearchEngine.Index.InvertedIndex;
+import in.ntsh.FileSearchEngine.Index.Posting;
 
 public class InvertedIndexTest {
 

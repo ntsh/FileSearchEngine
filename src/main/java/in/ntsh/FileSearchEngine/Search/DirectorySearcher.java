@@ -1,8 +1,11 @@
-package in.ntsh.FileSearchEngine;
+package in.ntsh.FileSearchEngine.Search;
 
 import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
+
+import in.ntsh.FileSearchEngine.Index.InvertedIndex;
+import in.ntsh.FileSearchEngine.Index.Posting;
 
 /**
  * Searches for a file if given an index.

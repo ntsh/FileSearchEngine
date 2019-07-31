@@ -1,4 +1,4 @@
-package in.ntsh.FileSearchEngine;
+package in.ntsh.FileSearchEngine.Index;
 
 /**
  * This class holds file and frequency data.

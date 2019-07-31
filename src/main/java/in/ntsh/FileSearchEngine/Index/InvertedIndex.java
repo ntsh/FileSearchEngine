@@ -1,4 +1,4 @@
-package in.ntsh.FileSearchEngine;
+package in.ntsh.FileSearchEngine.Index;
 
 import java.util.ArrayList;
 import java.util.HashMap;
