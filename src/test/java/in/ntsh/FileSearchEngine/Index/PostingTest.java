@@ -33,4 +33,10 @@ public class PostingTest {
 		assertEquals(6, this.posting.getCount());
 	}
 
+	@Test
+	public void testEmptyPosting() {
+		Posting emptyPosting = new Posting(FILE_NAME);
+		assertEquals(0, emptyPosting.getCount());
+	}
+
 }
